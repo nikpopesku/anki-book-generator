@@ -159,9 +159,8 @@ def main() -> None:
     print(f"Questions: {len(questions)} loaded from {args.questions}")
 
     # Output directory
-    out_dir = pathlib.Path(args.out_dir) if args.out_dir else (
-        pathlib.Path(__file__).parent / "output" / book_title
-    )
+    book_yaml_dir = pathlib.Path(args.book_yaml).parent
+    out_dir = pathlib.Path(args.out_dir) if args.out_dir else (book_yaml_dir / "decks")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # Derive deck name from chapter range

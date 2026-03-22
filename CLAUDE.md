@@ -15,7 +15,7 @@ cd ~/proj/npopesku/anki-book-generator
 python3 generate_deck.py books/kubernetes-book/book.yaml \
         --questions books/kubernetes-book/questions/ch06-10.json
 
-# Output lands in:  output/<Book Title>/<slug>_anki_chXX-XX.apkg
+# Output lands in:  books/kubernetes-book/decks/<slug>_anki_chXX-XX.apkg
 ```
 
 ---
@@ -26,7 +26,7 @@ python3 generate_deck.py books/kubernetes-book/book.yaml \
 1. Read the PDF pages for each new chapter (see PDF access below)
 2. Generate questions following the JSON format (see below) — 12 per chapter, 3A 3B 3C 3D
 3. Save to `books/<book-slug>/questions/chXX-XX.json`
-4. Run `generate_deck.py` to build the `.apkg`
+4. Run `generate_deck.py` to build the `.apkg` (lands in `books/<book-slug>/decks/`)
 5. Commit the new JSON file to git (`.apkg` is gitignored)
 
 ---
@@ -113,17 +113,16 @@ anki-book-generator/
 ├── requirements.txt          # pip install -r requirements.txt
 ├── CLAUDE.md                 # this file
 ├── README.md
-├── .gitignore                # output/ is ignored
-├── books/
-│   └── kubernetes-book/
-│       ├── book.yaml
-│       └── questions/
-│           ├── ch01-05.json
-│           ├── ch06-10.json
-│           └── chXX-XX.json  # add new batches here
-└── output/                   # gitignored
-    └── The Kubernetes Book/
-        └── *.apkg
+├── .gitignore                # decks/ dirs are ignored
+└── books/
+    └── kubernetes-book/
+        ├── book.yaml
+        ├── questions/
+        │   ├── ch01-05.json
+        │   ├── ch06-10.json
+        │   └── chXX-XX.json  # add new batches here
+        └── decks/            # gitignored — generated .apkg files
+            └── *.apkg
 ```
 
 ---

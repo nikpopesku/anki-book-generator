@@ -1,4 +1,4 @@
-output/
+**/decks/
 __pycache__/
 *.pyc
 .DS_Store

@@ -16,7 +16,7 @@ python3 generate_deck.py books/kubernetes-book/book.yaml \
         --questions books/kubernetes-book/questions/ch06-10.json
 ```
 
-Output: `output/<Book Title>/<book>_anki_chXX-XX.apkg`
+Output: `books/<book-slug>/decks/<book>_anki_chXX-XX.apkg`
 
 Import into Anki: **File → Import → select the `.apkg` file**
 
