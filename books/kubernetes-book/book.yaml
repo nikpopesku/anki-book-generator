@@ -1,0 +1,23 @@
+title: "The Kubernetes Book"
+deck_prefix: "The Kubernetes Book"
+pdf_path: "/home/niku/Yandex.Disk/Books/!Programming/K8s/"
+pdf_glob: "The Kubernetes Book*"
+tags: ["k8s"]
+chapters:
+  - {num: 1,  title: "Kubernetes Primer",                    pages: "5-12"}
+  - {num: 2,  title: "Kubernetes Principles of Operation",   pages: "13-30"}
+  - {num: 3,  title: "Getting Kubernetes",                   pages: "31-42"}
+  - {num: 4,  title: "Working with Pods",                    pages: "43-72"}
+  - {num: 5,  title: "Virtual Clusters with Namespaces",     pages: "73-80"}
+  - {num: 6,  title: "Kubernetes Deployments",               pages: "81-106"}
+  - {num: 7,  title: "Kubernetes Services",                  pages: "107-122"}
+  - {num: 8,  title: "Ingress",                              pages: "123-138"}
+  - {num: 9,  title: "Wasm on Kubernetes",                   pages: "139-158"}
+  - {num: 10, title: "Service Discovery Deep Dive",          pages: "159-176"}
+  - {num: 11, title: "Kubernetes storage",                   pages: "177-202"}
+  - {num: 12, title: "ConfigMaps and Secrets",               pages: "203-224"}
+  - {num: 13, title: "StatefulSets",                         pages: "225-258"}
+  - {num: 14, title: "API security and RBAC",                pages: "259-298"}
+  - {num: 15, title: "The Kubernetes API",                   pages: "299-326"}
+  - {num: 16, title: "Threat modelling Kubernetes",          pages: "327-358"}
+  - {num: 17, title: "Real-world Kubernetes security",       pages: "359-400"}

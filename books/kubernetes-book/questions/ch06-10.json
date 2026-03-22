@@ -1,0 +1,782 @@
+[
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "Which autoscaler adds and removes Pods to meet current demand?",
+    "choices": {
+      "A": "Horizontal Pod Autoscaler (HPA)",
+      "B": "Vertical Pod Autoscaler (VPA)",
+      "C": "Cluster Autoscaler (CA)",
+      "D": "Node Autoscaler (NA)"
+    },
+    "correct": "A",
+    "explanation": "The HPA watches metrics and adds or removes Pod replicas automatically. The CA adds/removes cluster nodes, and the VPA adjusts CPU/memory of running Pods."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "What does the declarative model mean in the context of Kubernetes?",
+    "choices": {
+      "A": "You describe the desired end state in YAML and let Kubernetes figure out how to achieve it",
+      "B": "You issue a series of imperative commands telling Kubernetes each exact step",
+      "C": "You write a shell script that Kubernetes runs on each worker node",
+      "D": "You interact with Kubernetes through a graphical dashboard"
+    },
+    "correct": "A",
+    "explanation": "The declarative model lets you say 'I want 5 replicas' without specifying how. Kubernetes reconciles observed state with desired state automatically."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "During a rolling update with 10 desired replicas and maxUnavailable: 1, what is the minimum number of replicas Kubernetes will keep running?",
+    "choices": {
+      "A": "10",
+      "B": "9",
+      "C": "11",
+      "D": "8"
+    },
+    "correct": "B",
+    "explanation": "maxUnavailable: 1 allows Kubernetes to go one Pod below desired state, so the minimum running replicas during the update is 10 \u2212 1 = 9."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "Which resource sits directly below a Deployment and is responsible for self-healing and scaling of Pods?",
+    "choices": {
+      "A": "StatefulSet",
+      "B": "ReplicaSet",
+      "C": "DaemonSet",
+      "D": "ConfigMap"
+    },
+    "correct": "B",
+    "explanation": "A Deployment manages a ReplicaSet, which manages the actual Pods. The ReplicaSet controller runs a reconciliation loop to maintain the correct Pod count."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "What does spec.minReadySeconds control in a Deployment rolling update?",
+    "choices": {
+      "A": "The minimum number of healthy replicas that must exist at all times",
+      "B": "How long a Pod must run before it is considered started",
+      "C": "How long Kubernetes waits between replacing individual replicas during a rollout",
+      "D": "The interval at which the Deployment controller checks for desired-state changes"
+    },
+    "correct": "C",
+    "explanation": "minReadySeconds throttles the rollout rate: Kubernetes waits this many seconds after each replica replacement before proceeding to the next one."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "When you update a Deployment's Pod spec, what does the Deployment controller create to manage the new version of Pods?",
+    "choices": {
+      "A": "A new Namespace for isolation",
+      "B": "A new Deployment running alongside the old one",
+      "C": "A new ReplicaSet configured with the updated Pod spec",
+      "D": "A new ConfigMap holding the new container image reference"
+    },
+    "correct": "C",
+    "explanation": "Each rolling update creates a new ReplicaSet with the updated spec. The controller scales the new ReplicaSet up and the old one down \u2014 zero downtime."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "When rolling back a Deployment, which object is 'wound up' to restore the earlier Pod configuration?",
+    "choices": {
+      "A": "A Pod template stored in a ConfigMap",
+      "B": "A StatefulSet from the previous release",
+      "C": "The Deployment manifest retrieved from version control",
+      "D": "An older ReplicaSet whose configuration was preserved after the last update"
+    },
+    "correct": "D",
+    "explanation": "Kubernetes retains older ReplicaSets (controlled by revisionHistoryLimit). Rolling back winds up an older ReplicaSet and winds down the current one."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "Which Deployment spec field controls how many extra Pods above the desired replica count Kubernetes may create during a rolling update?",
+    "choices": {
+      "A": "minReadySeconds",
+      "B": "revisionHistoryLimit",
+      "C": "maxUnavailable",
+      "D": "maxSurge"
+    },
+    "correct": "D",
+    "explanation": "maxSurge defines how many Pods above the desired count can exist during a rollout. With 10 desired and maxSurge: 1, Kubernetes may temporarily run 11 Pods."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "How does a Deployment use labels when deciding which Pods to manage during a rolling update?",
+    "choices": {
+      "A": "It picks all Pods on the same node as the Deployment controller",
+      "B": "It selects Pods using the label selector defined in spec.selector.matchLabels",
+      "C": "It identifies Pods by their creation timestamp and replaces the oldest ones first",
+      "D": "It manages all Pods in the same namespace regardless of labels"
+    },
+    "correct": "B",
+    "explanation": "The Deployment's spec.selector.matchLabels defines which Pods it owns and manages. The Pod template must produce Pods with matching labels \u2014 this relationship is immutable after creation."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "What command pauses an in-progress Deployment rollout?",
+    "choices": {
+      "A": "kubectl rollout pause deploy <name>",
+      "B": "kubectl stop rollout deploy <name>",
+      "C": "kubectl deployment pause <name>",
+      "D": "kubectl freeze deploy <name>"
+    },
+    "correct": "A",
+    "explanation": "'kubectl rollout pause' halts the rolling update at its current state. 'kubectl rollout resume' continues it. This is useful for canary-style inspections mid-rollout."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "What is the purpose of progressDeadlineSeconds in a Deployment spec?",
+    "choices": {
+      "A": "It sets the maximum time allowed between each individual replica replacement",
+      "B": "It defines how long kubectl waits before reporting a rollout as timed out on the client side",
+      "C": "It specifies the maximum total time for a rollout to complete before Kubernetes marks it as failed",
+      "D": "It sets a timeout for pulling container images before the rollout is aborted"
+    },
+    "correct": "C",
+    "explanation": "If a Deployment fails to make progress for progressDeadlineSeconds, its status is set to 'Failed'. This prevents stuck rollouts from going undetected indefinitely."
+  },
+  {
+    "chapter": 6,
+    "chapter_title": "Kubernetes Deployments",
+    "question": "Which command rolls back a Deployment to revision 1?",
+    "choices": {
+      "A": "kubectl rollout revert deployment hello-deploy --revision=1",
+      "B": "kubectl deployment rollback hello-deploy --to=1",
+      "C": "kubectl reset deployment hello-deploy --revision=1",
+      "D": "kubectl rollout undo deployment hello-deploy --to-revision=1"
+    },
+    "correct": "D",
+    "explanation": "'kubectl rollout undo' is the imperative rollback command. '--to-revision=1' targets a specific revision. Remember to also update your source YAML files to reflect the rollback."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "Why should applications never connect directly to Pods?",
+    "choices": {
+      "A": "Pods are ephemeral \u2014 they can be deleted during scaling, updates, rollbacks, node maintenance, or failures at any time",
+      "B": "Pods do not have IP addresses on the cluster network",
+      "C": "Pods require client certificates that most applications cannot obtain",
+      "D": "Pods are only accessible within the same Namespace as the caller"
+    },
+    "correct": "A",
+    "explanation": "Kubernetes treats Pods as temporary. A Service provides a stable DNS name, IP, and port in front of a dynamic set of Pods, decoupling clients from Pod lifecycle."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "What is the default Service type in Kubernetes when no type is specified?",
+    "choices": {
+      "A": "ClusterIP",
+      "B": "NodePort",
+      "C": "LoadBalancer",
+      "D": "ExternalName"
+    },
+    "correct": "A",
+    "explanation": "ClusterIP is the default. It assigns a stable internal cluster IP and DNS name reachable only from inside the cluster."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "What Kubernetes object is automatically created alongside a Service and maintains an always-up-to-date list of healthy Pod IPs matching the Service's label selector?",
+    "choices": {
+      "A": "ConfigMap",
+      "B": "Deployment",
+      "C": "EndpointSlice",
+      "D": "ReplicaSet"
+    },
+    "correct": "C",
+    "explanation": "The EndpointSlice controller creates and continuously updates an EndpointSlice for each Service, adding new matching Pods and removing deleted or unhealthy ones."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "What port range does NodePort use for external access to cluster services?",
+    "choices": {
+      "A": "80\u2013443",
+      "B": "1024\u20134999",
+      "C": "8080\u20138443",
+      "D": "30000\u201332767"
+    },
+    "correct": "D",
+    "explanation": "NodePort Services publish a port in the 30000\u201332767 range on every cluster node. This high port range and the need to know node IPs are the main reasons teams prefer LoadBalancer."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "Which Service type creates a cloud load balancer and exposes an application via a low-numbered port and a publicly resolvable DNS name?",
+    "choices": {
+      "A": "ClusterIP",
+      "B": "LoadBalancer",
+      "C": "NodePort",
+      "D": "IngressService"
+    },
+    "correct": "B",
+    "explanation": "A LoadBalancer Service integrates with the cloud provider to provision an internet-facing load balancer, building on top of ClusterIP and NodePort automatically."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "What mechanism do Services use to select which Pods to send traffic to?",
+    "choices": {
+      "A": "Pod names and UIDs stored in the Service spec",
+      "B": "Label selectors that match key=value labels on Pods",
+      "C": "IP address ranges assigned per Namespace",
+      "D": "The cluster node each Pod is currently scheduled on"
+    },
+    "correct": "B",
+    "explanation": "Services define a selector block with key=value label pairs. Any Pod carrying those labels is added to the Service's EndpointSlice and receives traffic."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "In a Service YAML manifest, what does the targetPort field specify?",
+    "choices": {
+      "A": "The NodePort exposed on every cluster node",
+      "B": "The port on the cloud load balancer",
+      "C": "The port the application container is listening on inside the Pod",
+      "D": "The port registered with the cluster DNS"
+    },
+    "correct": "C",
+    "explanation": "targetPort maps to the container port where the app listens. The Service's 'port' is what clients connect to; targetPort is where traffic is forwarded."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "When External Traffic Policy is set to 'Cluster' (default) for a LoadBalancer or NodePort Service, what happens to the original source IP?",
+    "choices": {
+      "A": "Source IPs are preserved and visible to the application Pod",
+      "B": "Source IPs are encrypted using mTLS before forwarding",
+      "C": "Source IPs are logged in the cluster audit trail but stripped from packets",
+      "D": "Source IPs are obscured (NAT'd) as traffic is forwarded across cluster nodes"
+    },
+    "correct": "D",
+    "explanation": "'Cluster' policy can send traffic to Pods on any node, requiring SNAT which hides the original source IP. Use policy 'Local' if you need to preserve source IPs."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "What is Session Affinity in a Kubernetes Service?",
+    "choices": {
+      "A": "A setting that keeps all connections from the same client going to the same Pod (sticky sessions)",
+      "B": "A feature that ensures new Pods only receive traffic after a warm-up period",
+      "C": "A mechanism that routes traffic to the Pod closest to the client's geographic location",
+      "D": "A policy that evenly distributes traffic across Pods regardless of client IP"
+    },
+    "correct": "A",
+    "explanation": "Setting spec.sessionAffinity: ClientIP makes the Service send all requests from the same client IP to the same Pod. Useful for stateful apps, but an anti-pattern for true microservices."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "Which command imperatively creates a LoadBalancer Service for an existing Deployment?",
+    "choices": {
+      "A": "kubectl create service loadbalancer <name>",
+      "B": "kubectl expose deployment <name> --type=LoadBalancer --port=<port>",
+      "C": "kubectl apply loadbalancer --deployment=<name>",
+      "D": "kubectl service create --type=LoadBalancer <name>"
+    },
+    "correct": "B",
+    "explanation": "'kubectl expose' inspects the Deployment and creates a Service with matching label selectors, correct port mappings, and the specified type. Quick for testing, but prefer YAML for production."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "What is the front end of a Kubernetes Service guaranteed to remain stable for?",
+    "choices": {
+      "A": "Only until the next cluster upgrade",
+      "B": "Until the Pods behind the Service are restarted",
+      "C": "Only while at least one healthy Pod matches the label selector",
+      "D": "The entire lifetime of the Service object \u2014 the IP, DNS name, and port never change"
+    },
+    "correct": "D",
+    "explanation": "That stability is the whole point of Services. No matter how many times the backend Pods are replaced or scaled, the Service's IP, DNS name, and port remain constant."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "What is the primary purpose of an Ingress resource in Kubernetes?",
+    "choices": {
+      "A": "To route external HTTP/HTTPS traffic to Services based on hostname or URL path rules",
+      "B": "To create persistent storage volumes for stateful applications",
+      "C": "To define network isolation policies between Pods in different Namespaces",
+      "D": "To auto-scale Deployments based on incoming HTTP request rate"
+    },
+    "correct": "A",
+    "explanation": "Ingress is a Layer-7 routing object. One Ingress entry point can route traffic to many backend Services based on hostname or URL path rules."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "What pathType value is used in the Ingress rule examples in the book?",
+    "choices": {
+      "A": "Prefix",
+      "B": "Exact",
+      "C": "Regex",
+      "D": "ImplementationSpecific"
+    },
+    "correct": "A",
+    "explanation": "The book's Ingress examples use pathType: Prefix, meaning any URL path that begins with the specified prefix matches the rule and is forwarded to the backend."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "What component actually processes Ingress rules and routes incoming traffic to backend Services?",
+    "choices": {
+      "A": "The Kubernetes API server",
+      "B": "The kube-proxy service on each worker node",
+      "C": "An Ingress controller (e.g., the NGINX Ingress controller)",
+      "D": "The kube-scheduler"
+    },
+    "correct": "C",
+    "explanation": "Ingress objects are just configuration. An Ingress controller \u2014 a separate deployment such as NGINX \u2014 reads those rules and performs the actual traffic routing."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "An Ingress rule containing 'host: shield.mcu.com' routes traffic that arrives at which address?",
+    "choices": {
+      "A": "Any path on any host in the cluster",
+      "B": "Any host that has /shield anywhere in the URL path",
+      "C": "The internal ClusterIP of the shield Service directly",
+      "D": "Requests whose HTTP Host header matches shield.mcu.com (host-based routing)"
+    },
+    "correct": "D",
+    "explanation": "Host-based Ingress rules match on the HTTP Host header. Traffic with Host: shield.mcu.com is forwarded to the specified backend Service."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "What is a path-based Ingress rule primarily used for?",
+    "choices": {
+      "A": "Routing traffic to different backend Services based on the URL path (e.g., /shield vs /hydra on the same hostname)",
+      "B": "Restricting file-system access inside containers based on mount paths",
+      "C": "Configuring TLS certificates for specific URL paths",
+      "D": "Mapping persistent-volume paths to container directories"
+    },
+    "correct": "A",
+    "explanation": "Path-based rules let a single hostname (e.g., mcu.com) send /shield traffic to one Service and /hydra to another, without requiring separate hostnames."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "Which NGINX Ingress annotation rewrites the incoming URL path before forwarding to the backend?",
+    "choices": {
+      "A": "nginx.ingress.kubernetes.io/proxy-pass",
+      "B": "nginx.ingress.kubernetes.io/rewrite-target",
+      "C": "nginx.ingress.kubernetes.io/redirect-url",
+      "D": "nginx.ingress.kubernetes.io/path-override"
+    },
+    "correct": "B",
+    "explanation": "The rewrite-target annotation modifies the URL path before proxying. Traffic arriving at mcu.com/shield can be rewritten to mcu.com/ before hitting the backend."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "What field in an Ingress manifest specifies which Ingress controller should manage that Ingress object?",
+    "choices": {
+      "A": "metadata.annotations.controller",
+      "B": "spec.controllerClass",
+      "C": "spec.ingressClassName",
+      "D": "spec.backend.controllerRef"
+    },
+    "correct": "C",
+    "explanation": "spec.ingressClassName references an IngressClass resource linked to a specific Ingress controller deployment (e.g., 'nginx'). Without it, no controller picks up the Ingress."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "Compared to a separate LoadBalancer Service per application, what is a key advantage of using Ingress?",
+    "choices": {
+      "A": "Ingress provides lower network latency than LoadBalancer Services",
+      "B": "Ingress works without requiring any Ingress controller to be installed",
+      "C": "Ingress automatically applies mTLS between all backend Pods",
+      "D": "A single Ingress can route to many Services, reducing the number of cloud load balancers needed"
+    },
+    "correct": "D",
+    "explanation": "Each LoadBalancer Service provisions a dedicated (paid) cloud load balancer. An Ingress shares one load balancer across many apps using routing rules, cutting costs significantly."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "In what API group does the Ingress resource live?",
+    "choices": {
+      "A": "apps/v1",
+      "B": "networking.k8s.io/v1",
+      "C": "core/v1",
+      "D": "extensions/v1beta1"
+    },
+    "correct": "B",
+    "explanation": "Ingress moved to the stable networking.k8s.io/v1 API in Kubernetes 1.19. The old extensions/v1beta1 version was removed in 1.22."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "What annotation in the book's Ingress example tells the NGINX controller to rewrite incoming paths to '/'?",
+    "choices": {
+      "A": "nginx.ingress.kubernetes.io/proxy-redirect: /",
+      "B": "nginx.ingress.kubernetes.io/rewrite-target: /",
+      "C": "nginx.ingress.kubernetes.io/app-root: /",
+      "D": "nginx.ingress.kubernetes.io/force-ssl-redirect: /"
+    },
+    "correct": "B",
+    "explanation": "'nginx.ingress.kubernetes.io/rewrite-target: /' rewrites any matched path to '/' before the request reaches the backend Service. This annotation is NGINX-specific."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "Why might you prefer a cloud-hosted Ingress controller over a self-managed one?",
+    "choices": {
+      "A": "Cloud-hosted controllers support more Ingress rule types than self-managed ones",
+      "B": "Cloud-hosted controllers are always free; self-managed ones require a licence",
+      "C": "Self-managed controllers cannot handle HTTPS traffic",
+      "D": "Cloud-hosted controllers integrate natively with the cloud's load balancer, TLS, and CDN services \u2014 reducing operational overhead"
+    },
+    "correct": "D",
+    "explanation": "Providers like AWS, GCP, and Azure offer managed Ingress controllers (e.g., AWS Load Balancer Controller) that integrate deeply with cloud networking, removing the need to manage NGINX yourself."
+  },
+  {
+    "chapter": 8,
+    "chapter_title": "Ingress",
+    "question": "If you are NOT using NGINX as your Ingress controller, what change must you make to the book's example Ingress YAML?",
+    "choices": {
+      "A": "Remove the spec.rules section entirely",
+      "B": "Change the pathType from Prefix to Exact",
+      "C": "Change or remove the spec.ingressClassName and NGINX-specific annotations",
+      "D": "Switch from host-based to path-based routing rules"
+    },
+    "correct": "C",
+    "explanation": "spec.ingressClassName and NGINX-specific annotations (like rewrite-target) are controller-specific. Using a different controller requires updating these fields to match that controller's expected values."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "Which statement correctly describes a key security difference between Wasm and Linux containers?",
+    "choices": {
+      "A": "Wasm runs in a deny-by-default sandbox; Linux containers start with broad access to the shared host kernel",
+      "B": "Linux containers use WASI for secure sandboxed access; Wasm has no sandbox",
+      "C": "Wasm apps run as root by default; Linux containers run as non-root",
+      "D": "Container security is defined by W3C standards; Wasm security is not standardized"
+    },
+    "correct": "A",
+    "explanation": "Wasm executes in a deny-by-default sandbox hardened by years of browser use. Linux containers default to an open model sharing the host kernel."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "What did Docker Founder Solomon Hykes famously say about WebAssembly?",
+    "choices": {
+      "A": "'If Wasm+WASI existed in 2008, we wouldn't have needed to create Docker \u2014 WebAssembly on the server is the future of computing'",
+      "B": "'Wasm is a useful complement to containers but will never replace them'",
+      "C": "'Wasm is the fourth wave of cloud computing after VMs, containers, and serverless'",
+      "D": "'WASI is the missing link that will make Kubernetes obsolete within five years'"
+    },
+    "correct": "A",
+    "explanation": "Hykes tweeted that Wasm+WASI would have made Docker unnecessary, highlighting Wasm's potential as a universal portable runtime for cloud computing."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "What does WASI (WebAssembly System Interface) provide for Wasm applications?",
+    "choices": {
+      "A": "A tool to compile Wasm binaries into native machine code at runtime",
+      "B": "A standardized, secure way for sandboxed Wasm apps to access external resources such as networks, filesystems, and key-value stores",
+      "C": "A replacement for containerd on Kubernetes worker nodes",
+      "D": "A graphical management interface for deploying Wasm workloads to Kubernetes"
+    },
+    "correct": "B",
+    "explanation": "WASI is critical for server-side Wasm. It gives sandboxed apps a standardized interface to access the host environment securely. WASI Preview 2 is a major milestone."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "What Wasm framework is used in the chapter's hands-on section, and also automates Kubernetes Wasm steps in the real world via SpinKube?",
+    "choices": {
+      "A": "WasmEdge",
+      "B": "Spin (Fermyon)",
+      "C": "Wasmtime",
+      "D": "Node.js with Wasm target"
+    },
+    "correct": "B",
+    "explanation": "The chapter uses Spin from Fermyon to build and run Wasm apps. SpinKube is the related project that automates deploying Spin apps on Kubernetes in production."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "What is the main portability advantage of WebAssembly compared to Linux containers?",
+    "choices": {
+      "A": "A single Wasm binary runs on any system with a compatible Wasm runtime, regardless of OS or CPU architecture",
+      "B": "Wasm requires a separate build for each CPU architecture, just like containers",
+      "C": "Wasm images are identical in size to Linux containers",
+      "D": "Wasm containers can transparently run Windows workloads on Linux hosts"
+    },
+    "correct": "A",
+    "explanation": "Wasm compiles to a portable bytecode format, fulfilling 'build once, run anywhere'. Linux containers are architecture-specific (ARM vs AMD64) and cannot do this."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "Approximately how fast do Wasm apps typically cold-start?",
+    "choices": {
+      "A": "Similar to containers \u2014 around 1 to 5 seconds",
+      "B": "Longer than containers \u2014 Wasm needs JIT compilation at startup",
+      "C": "Around 10 milliseconds or less \u2014 sub-second cold starts",
+      "D": "Several minutes, because WASI must initialize the full host interface"
+    },
+    "correct": "C",
+    "explanation": "Wasm cold starts are commonly around 10 ms or less \u2014 some even start in microseconds. This makes Wasm ideal for serverless and event-driven use cases."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "In a Kubernetes cluster using containerd, what is a RuntimeClass object used for when running Wasm workloads?",
+    "choices": {
+      "A": "It defines the container image format and registry URL for Wasm apps",
+      "B": "It specifies the Namespace where Wasm Pods are allowed to run",
+      "C": "It sets CPU and memory resource limits specifically for Wasm workloads",
+      "D": "It maps a node label selector (e.g., wasm=yes) to the appropriate Wasm shim handler, ensuring Pods are scheduled to Wasm-capable nodes"
+    },
+    "correct": "D",
+    "explanation": "RuntimeClass tells Kubernetes which nodes can handle the workload (via nodeSelector) and which runtime handler (shim) containerd should use to start the app."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "What format must a Wasm binary be packaged in before Kubernetes can pull and schedule it?",
+    "choices": {
+      "A": "A tar.gz archive containing the binary and spin.toml",
+      "B": "A raw binary stored directly in a Kubernetes Secret",
+      "C": "A Linux container image built for the current CPU architecture",
+      "D": "An OCI image stored in an OCI-compatible container registry"
+    },
+    "correct": "D",
+    "explanation": "Kubernetes uses OCI images for all workloads including Wasm. The Wasm binary is packaged into a (typically very small) OCI image and pushed to a registry."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "What naming convention does containerd mandate for Wasm shim binaries?",
+    "choices": {
+      "A": "wasm-shim-<runtime>-v<version>",
+      "B": "k8s-runtime-<name>-shim",
+      "C": "containerd-shim-<runtime>-v<version>",
+      "D": "shim-wasm-<version>-<runtime>"
+    },
+    "correct": "C",
+    "explanation": "containerd requires all shim binaries to follow the pattern containerd-shim-<runtime>-v<version>. For example: containerd-shim-spin-v2."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "What is Wasm described as in terms of computing waves in the book?",
+    "choices": {
+      "A": "The second wave, following virtual machines",
+      "B": "Part of the first wave alongside containers",
+      "C": "The fourth wave, following VMs, containers, and serverless",
+      "D": "The third wave, following VMs and containers"
+    },
+    "correct": "D",
+    "explanation": "The book describes three waves: VMs (first), containers (second), and Wasm (third). Each enables smaller, faster, and more portable applications than the previous wave."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "Which label is added to a worker node to mark it as capable of running Wasm workloads in the hands-on section?",
+    "choices": {
+      "A": "runtime=wasm",
+      "B": "wasm=yes",
+      "C": "containerd-shim=spin",
+      "D": "node-type=wasm-worker"
+    },
+    "correct": "B",
+    "explanation": "The book uses 'kubectl label nodes k3d-wasm-agent-1 wasm=yes'. The RuntimeClass then uses a nodeSelector targeting this label to ensure Wasm Pods land on the right node."
+  },
+  {
+    "chapter": 9,
+    "chapter_title": "Wasm on Kubernetes",
+    "question": "What is a key limitation of Wasm compared to Linux containers at the time of writing the book?",
+    "choices": {
+      "A": "Wasm cannot be packaged as an OCI image",
+      "B": "Wasm does not support multi-container Pods",
+      "C": "Wasm is still early-stage for workloads with heavy networking and I/O requirements",
+      "D": "Wasm cannot run on ARM-based hardware"
+    },
+    "correct": "C",
+    "explanation": "The book notes Wasm is great for event handlers and fast cold starts, but for traditional cloud apps with heavy networking and I/O, containers may still be the better choice."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "What is the FQDN format for a Kubernetes Service named 'ent' in the 'default' Namespace?",
+    "choices": {
+      "A": "ent.default.svc.cluster.local",
+      "B": "default.ent.pod.cluster.local",
+      "C": "cluster.local.default.ent.svc",
+      "D": "svc.ent.default.kubernetes"
+    },
+    "correct": "A",
+    "explanation": "The full DNS name format is <service>.<namespace>.svc.cluster.local. Containers in the same Namespace can use the short name 'ent' and Kubernetes expands it."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "Who is responsible for configuring applications with the names of the other services they need to communicate with?",
+    "choices": {
+      "A": "The cluster DNS (CoreDNS)",
+      "B": "Application developers",
+      "C": "kube-proxy",
+      "D": "The EndpointSlice controller"
+    },
+    "correct": "B",
+    "explanation": "Step 1 in service discovery is always manual \u2014 developers must code the app to know the Service names of its dependencies. Kubernetes automates steps 2, 3, and 4."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "What file inside every container does Kubernetes automatically configure to point to the cluster DNS IP address?",
+    "choices": {
+      "A": "/etc/resolv.conf",
+      "B": "/etc/nsswitch.conf",
+      "C": "/etc/hosts",
+      "D": "/etc/kubernetes/dns.conf"
+    },
+    "correct": "A",
+    "explanation": "Kubernetes injects the cluster DNS ClusterIP (e.g., 10.96.0.10) and search domains into /etc/resolv.conf on every container, enabling automatic name resolution."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "After a container receives a ClusterIP from the cluster DNS, what happens when it sends traffic to that ClusterIP?",
+    "choices": {
+      "A": "The container connects directly to the Pod \u2014 the ClusterIP is a normal routable address",
+      "B": "The cluster DNS immediately translates the ClusterIP into a Pod IP on the fly",
+      "C": "CoreDNS intercepts the packet and load-balances it among healthy Pods",
+      "D": "The traffic hits the node's kernel, which redirects it to a Pod IP via kube-proxy rules \u2014 ClusterIPs are virtual and have no direct routes"
+    },
+    "correct": "D",
+    "explanation": "ClusterIPs are virtual \u2014 no routes exist to the service network. kube-proxy installs kernel rules (IPVS/iptables) that intercept ClusterIP traffic and DNAT it to a Pod IP."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "What is the name of the Service that always fronts the cluster DNS in Kubernetes, regardless of the underlying implementation?",
+    "choices": {
+      "A": "kube-dns",
+      "B": "coredns-service",
+      "C": "dns-proxy",
+      "D": "cluster-dns-svc"
+    },
+    "correct": "A",
+    "explanation": "The Service is always named kube-dns. The underlying Pods are usually CoreDNS (named coredns), but the Service name is standardized as kube-dns."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "What is the default cluster domain used by most Kubernetes clusters?",
+    "choices": {
+      "A": "k8s.local",
+      "B": "cluster.local",
+      "C": "svc.kubernetes.io",
+      "D": "kubernetes.default"
+    },
+    "correct": "B",
+    "explanation": "By default, all Kubernetes Service DNS records are under the cluster.local domain. This can be changed during cluster setup but rarely is."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "Which system service on every Kubernetes node programs the kernel to forward ClusterIP traffic to Pod IPs?",
+    "choices": {
+      "A": "CoreDNS",
+      "B": "kubelet",
+      "C": "containerd",
+      "D": "kube-proxy"
+    },
+    "correct": "D",
+    "explanation": "kube-proxy maintains IPVS/iptables rules on every node. When a packet is destined for a ClusterIP, the kernel redirects it to a healthy Pod IP via these rules."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "In Kubernetes service discovery, what is an 'unqualified name'?",
+    "choices": {
+      "A": "A Service that has been created but not yet registered with the cluster DNS",
+      "B": "A DNS record that uses an IP address literal instead of a hostname",
+      "C": "A hostname shared across multiple Namespaces with no unique prefix",
+      "D": "A short Service name (e.g., 'ent') that gets automatically expanded to a FQDN by appending search domain suffixes from /etc/resolv.conf"
+    },
+    "correct": "D",
+    "explanation": "Containers append search domains like default.svc.cluster.local to short names. So 'ent' transparently becomes 'ent.default.svc.cluster.local' during DNS resolution."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "What type of DNS records does the cluster DNS create for each new Kubernetes Service?",
+    "choices": {
+      "A": "Only CNAME records pointing to the node hostname",
+      "B": "PTR records for reverse DNS lookups only",
+      "C": "A and SRV records \u2014 A records for the ClusterIP, SRV records for named ports",
+      "D": "MX records for inter-service email routing"
+    },
+    "correct": "C",
+    "explanation": "The cluster DNS creates A records mapping the Service name to its ClusterIP, and SRV records for named ports. This allows service discovery with both name-to-IP and port lookups."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "What happens to service discovery when a Service is in a different Namespace from the calling application?",
+    "choices": {
+      "A": "Cross-namespace service discovery is blocked by default \u2014 you need a NetworkPolicy to allow it",
+      "B": "The application must use the FQDN (e.g., cer.other-ns.svc.cluster.local) since the short name only resolves within the same namespace",
+      "C": "Kubernetes automatically creates a DNS alias in the caller's namespace for the remote Service",
+      "D": "The application must use the Service's ClusterIP directly \u2014 DNS does not work across namespaces"
+    },
+    "correct": "B",
+    "explanation": "Search domains only cover the caller's own namespace. To reach a Service in another namespace, apps must use the full name: <service>.<namespace>.svc.cluster.local."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "What tool would you use inside a Pod to troubleshoot service discovery issues?",
+    "choices": {
+      "A": "kubectl debug service <name>",
+      "B": "netstat -tulpn inside the Pod",
+      "C": "nslookup or dig targeting the cluster DNS IP from inside the Pod",
+      "D": "kubectl logs coredns to view all DNS queries cluster-wide"
+    },
+    "correct": "C",
+    "explanation": "Running 'nslookup <service-name>' or 'dig @<cluster-dns-ip> <fqdn>' from inside a Pod lets you verify whether DNS resolution is working and what IP is returned."
+  },
+  {
+    "chapter": 10,
+    "chapter_title": "Service Discovery Deep Dive",
+    "question": "What is the purpose of the 'ndots:5' option in a container's /etc/resolv.conf?",
+    "choices": {
+      "A": "It limits DNS queries to a maximum of 5 retries before failing",
+      "B": "It sets the DNS query timeout to 5 seconds",
+      "C": "It tells the DNS resolver to try appending search domains if the name contains fewer than 5 dots before treating it as a FQDN",
+      "D": "It configures the resolver to use 5 DNS servers for load balancing"
+    },
+    "correct": "C",
+    "explanation": "ndots:5 means names with fewer than 5 dots are tried with search domain suffixes first. This ensures short names like 'ent' are resolved via the cluster DNS, not sent to external DNS."
+  },
+  {
+    "chapter": 7,
+    "chapter_title": "Kubernetes Services",
+    "question": "What does the front end of a Kubernetes Service provide that is guaranteed stable for the entire lifetime of the Service?",
+    "choices": {
+      "A": "A temporary ClusterIP that rotates periodically for security",
+      "B": "A high-numbered NodePort on every cluster node",
+      "C": "A stable DNS name, IP address, and port that never change regardless of Pod restarts or updates",
+      "D": "A cloud load balancer IP that updates when the backing Pods are replaced"
+    },
+    "correct": "C",
+    "explanation": "The Service front end (DNS name, ClusterIP, port) is guaranteed to remain constant for the life of the Service object. This is what allows clients to reliably connect despite Pods changing."
+  }
+]

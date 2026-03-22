@@ -1,0 +1,782 @@
+[
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "What is the most accurate one-sentence description of Kubernetes?",
+    "choices": {
+      "A": "An orchestrator of containerized cloud-native microservices applications",
+      "B": "A container runtime that builds and runs Docker images",
+      "C": "A cloud provider offering managed container services",
+      "D": "A Linux kernel tool for creating namespaces and cgroups"
+    },
+    "correct": "A",
+    "explanation": "Kubernetes orchestrates containerized apps \u2014 it deploys, scales, self-heals, and updates them automatically. It does not build images or provide compute itself."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "Which of the following does Kubernetes do automatically?",
+    "choices": {
+      "A": "Rolling updates and rollbacks of application versions",
+      "B": "Compiling and building application source code from a git repo",
+      "C": "Choosing which programming language to use for microservices",
+      "D": "Provisioning physical server hardware"
+    },
+    "correct": "A",
+    "explanation": "Kubernetes automates deployments, scaling, self-healing, and rolling updates/rollbacks. Building source code is the job of a CI pipeline, not Kubernetes."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "What does it mean for an application to be 'cloud-native'?",
+    "choices": {
+      "A": "It is designed with features like auto-scaling, self-healing, and automated updates",
+      "B": "It runs exclusively on a public cloud provider like AWS or Azure",
+      "C": "It is written in Go or Rust programming languages",
+      "D": "It stores all its data in cloud object storage"
+    },
+    "correct": "A",
+    "explanation": "Cloud-native is about design: self-healing, auto-scaling, rolling updates. A cloud-native app can run anywhere \u2014 not only on public cloud."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "What is the primary difference between containers and virtual machines?",
+    "choices": {
+      "A": "Containers are slower than VMs because they use more overhead",
+      "B": "Containers share the host OS kernel; VMs each run their own full OS kernel",
+      "C": "VMs are more portable than containers across different CPU architectures",
+      "D": "Containers require a hypervisor to run; VMs do not"
+    },
+    "correct": "B",
+    "explanation": "Containers share the host kernel and are therefore lighter and faster. VMs include a full guest OS with its own kernel, making them heavier but more isolated."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "In a microservices architecture, what characterizes a microservice?",
+    "choices": {
+      "A": "A container that uses less than 128 MB of RAM",
+      "B": "A small, specialized, independently deployable part of an application with its own release cycle",
+      "C": "A Kubernetes Pod running a single container",
+      "D": "A serverless function that runs on demand"
+    },
+    "correct": "B",
+    "explanation": "A microservice is a small, focused, independently deployable piece of functionality. Each can be updated, scaled, and deployed on its own schedule."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "Why did Kubernetes originate inside Google?",
+    "choices": {
+      "A": "Google invented containers and needed a platform to distribute them",
+      "B": "Google was running billions of containerized workloads with an internal system called Borg and wanted to open-source similar technology",
+      "C": "Google needed a way to replace virtual machines with containers for cost savings",
+      "D": "Google created Kubernetes to compete with Amazon ECS"
+    },
+    "correct": "B",
+    "explanation": "Google built Borg and Omega internally to run massive container workloads. Kubernetes was born as an open-source version of the ideas behind those systems."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "What does the Cloud Native Computing Foundation (CNCF) do?",
+    "choices": {
+      "A": "It builds and maintains the Kubernetes container runtime",
+      "B": "It provides managed Kubernetes clusters for enterprises",
+      "C": "It is a vendor-neutral organization that hosts Kubernetes and many other cloud-native projects",
+      "D": "It writes the official Kubernetes documentation and certification exams"
+    },
+    "correct": "C",
+    "explanation": "CNCF is the vendor-neutral home of Kubernetes, Prometheus, containerd, and many other cloud-native projects. It provides governance and community support."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "Which of the following does Kubernetes NOT do automatically?",
+    "choices": {
+      "A": "Scale applications up and down based on demand",
+      "B": "Self-heal apps when containers crash",
+      "C": "Compile and build application source code",
+      "D": "Perform rolling updates and rollbacks"
+    },
+    "correct": "C",
+    "explanation": "Kubernetes orchestrates running containers \u2014 it does not build them. Building and testing source code is handled by CI systems like GitHub Actions or Jenkins."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "What is a container image?",
+    "choices": {
+      "A": "A running instance of a containerized application",
+      "B": "A snapshot of a virtual machine's disk",
+      "C": "A read-only package containing app code, dependencies, and instructions to run the application",
+      "D": "A live copy of a Kubernetes Pod ready to be deployed"
+    },
+    "correct": "C",
+    "explanation": "A container image is an immutable, layered package. When you run it, you get a container. The image stays read-only; a writable layer is added at runtime."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "Kubernetes is described as the 'operating system of the cloud.' What does this mean?",
+    "choices": {
+      "A": "Kubernetes runs on a custom Linux kernel designed for cloud computing",
+      "B": "Kubernetes replaces traditional operating systems on cloud servers",
+      "C": "Kubernetes is built and maintained exclusively by cloud providers",
+      "D": "Just as an OS abstracts hardware for applications, Kubernetes abstracts cloud infrastructure for containerized applications"
+    },
+    "correct": "D",
+    "explanation": "Kubernetes provides a consistent abstraction layer above heterogeneous cloud infrastructure, just like an OS abstracts hardware for user programs."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "What does the Open Container Initiative (OCI) define?",
+    "choices": {
+      "A": "Certification standards for Kubernetes cluster administrators",
+      "B": "The official Kubernetes cluster upgrade process",
+      "C": "The organization that hosts the Kubernetes project alongside CNCF",
+      "D": "Open standards for container image formats and container runtimes, ensuring interoperability across tools"
+    },
+    "correct": "D",
+    "explanation": "OCI standardizes container image formats and runtime specs so that images built with one tool (e.g., Docker) run on any OCI-compliant runtime (e.g., containerd, CRI-O)."
+  },
+  {
+    "chapter": 1,
+    "chapter_title": "Kubernetes Primer",
+    "question": "Which statement about Kubernetes and Docker is correct?",
+    "choices": {
+      "A": "Kubernetes requires Docker to be installed on every worker node",
+      "B": "Docker and Kubernetes are competing products that cannot be used together",
+      "C": "Kubernetes was created by Docker Inc. as an enterprise container orchestrator",
+      "D": "Kubernetes can work with any OCI-compliant container runtime \u2014 not just Docker"
+    },
+    "correct": "D",
+    "explanation": "Kubernetes uses the Container Runtime Interface (CRI). Docker, containerd, and CRI-O are all valid runtimes. Docker was deprecated as the default runtime in Kubernetes 1.20."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What is the role of the Kubernetes API server?",
+    "choices": {
+      "A": "The front end of the control plane \u2014 all communication goes through it; it validates and processes every API request",
+      "B": "It runs on every worker node and manages Pod lifecycle",
+      "C": "It stores the cluster state in a distributed key-value database",
+      "D": "It schedules Pods to worker nodes based on available resources"
+    },
+    "correct": "A",
+    "explanation": "The API server is the only component that talks directly to etcd. Every kubectl command, controller, and kubelet communicates through the API server."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What does the Kubernetes scheduler do?",
+    "choices": {
+      "A": "It watches for new Pods with no assigned node and selects the best node based on resources, affinity, and taints",
+      "B": "It manages the lifecycle of containers inside Pods",
+      "C": "It processes incoming API requests and validates manifests",
+      "D": "It runs reconciliation loops to keep desired state matched with observed state"
+    },
+    "correct": "A",
+    "explanation": "The scheduler watches the API server for unscheduled Pods and assigns them to nodes that meet the Pod's resource requests and scheduling constraints."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What is etcd in a Kubernetes cluster?",
+    "choices": {
+      "A": "The distributed key-value store that holds the entire cluster state and configuration",
+      "B": "The container runtime that starts and stops containers on worker nodes",
+      "C": "The component that watches for failed Pods and restarts them",
+      "D": "The networking plugin that routes traffic between Pods"
+    },
+    "correct": "A",
+    "explanation": "etcd is the source of truth for the cluster. Every object \u2014 Pods, Services, Deployments \u2014 is persisted here. Losing etcd means losing the cluster state."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What component runs on every Kubernetes worker node and is responsible for starting and stopping containers as instructed by the control plane?",
+    "choices": {
+      "A": "kube-proxy",
+      "B": "kubelet",
+      "C": "kube-scheduler",
+      "D": "cloud-controller-manager"
+    },
+    "correct": "B",
+    "explanation": "The kubelet is the node agent. It watches the API server for Pods assigned to its node and instructs the container runtime to start or stop them accordingly."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "In Kubernetes, what is a Pod?",
+    "choices": {
+      "A": "A container image stored in a registry ready to be deployed",
+      "B": "The smallest deployable unit \u2014 a wrapper around one or more containers that share a network namespace and storage volumes",
+      "C": "A YAML file describing the desired state of an application",
+      "D": "A virtual machine running on a cluster worker node"
+    },
+    "correct": "B",
+    "explanation": "A Pod is the atomic unit of scheduling. All containers in a Pod share the same IP address, hostname, and volumes \u2014 they act like processes on the same host."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What is the purpose of the controller manager on the control plane?",
+    "choices": {
+      "A": "It receives all incoming API requests and routes them to the appropriate components",
+      "B": "It runs a set of controllers that watch the cluster and reconcile observed state with desired state",
+      "C": "It schedules Pods to the most appropriate worker nodes",
+      "D": "It manages authentication and authorization for all API requests"
+    },
+    "correct": "B",
+    "explanation": "The controller manager runs many controllers (ReplicaSet, Deployment, Node, etc.) each in a reconciliation loop, ensuring the actual cluster state matches what was declared."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What is 'desired state' in the Kubernetes declarative model?",
+    "choices": {
+      "A": "The current running state of all objects in the cluster as reported by each node",
+      "B": "The maximum resource capacity that a node can provide",
+      "C": "What you declare you want (e.g., '5 replicas') \u2014 Kubernetes continuously works to make observed state match it",
+      "D": "The list of nodes that are healthy and ready to accept scheduled Pods"
+    },
+    "correct": "C",
+    "explanation": "You declare desired state in YAML and post it to Kubernetes. Controllers watch for drift between desired and observed state and reconcile automatically \u2014 no manual intervention needed."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What does kube-proxy do on every cluster node?",
+    "choices": {
+      "A": "It manages the lifecycle of containers and reports their status to the control plane",
+      "B": "It copies container images from registries to the local node cache",
+      "C": "It maintains network rules (iptables/IPVS) that allow traffic to reach Services and their backend Pods",
+      "D": "It sends heartbeats to the control plane to report node health"
+    },
+    "correct": "C",
+    "explanation": "kube-proxy programs the kernel's packet filtering rules so that traffic addressed to a Service's ClusterIP gets forwarded to one of the healthy Pods behind it."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What is the role of the cloud-controller-manager?",
+    "choices": {
+      "A": "It schedules Pods to nodes in the cloud based on available resources",
+      "B": "It enforces network policies between Pods across cloud regions",
+      "C": "It handles container image pulls from cloud container registries",
+      "D": "It integrates the cluster with the underlying cloud provider's APIs \u2014 provisioning load balancers, storage, and managing node lifecycle"
+    },
+    "correct": "D",
+    "explanation": "The cloud-controller-manager offloads cloud-specific logic (e.g., creating AWS ELBs for LoadBalancer Services) from the core Kubernetes components, keeping them cloud-agnostic."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What happens during a Kubernetes reconciliation cycle when a Pod crashes unexpectedly?",
+    "choices": {
+      "A": "The API server immediately restarts the Pod on the same node",
+      "B": "An alert is sent to the cluster administrator and the Pod stays in CrashLoopBackOff indefinitely",
+      "C": "etcd rolls back to the previous state recorded before the Pod crashed",
+      "D": "A controller notices observed state (fewer Pods) doesn't match desired state and creates a replacement Pod"
+    },
+    "correct": "D",
+    "explanation": "Controllers run continuous reconciliation loops. When a Pod disappears, the ReplicaSet controller detects the deficit and schedules a new Pod to restore desired state."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "How do containers inside different Pods communicate with each other on the same Kubernetes cluster?",
+    "choices": {
+      "A": "Through the host node's network interface using NAT",
+      "B": "Only via a Service \u2014 direct Pod-to-Pod communication is not supported by Kubernetes",
+      "C": "Via a VPN tunnel created by the kubelet between pods",
+      "D": "Using the flat Pod network \u2014 every Pod gets a unique cluster-routable IP and can talk directly to any other Pod"
+    },
+    "correct": "D",
+    "explanation": "Kubernetes requires a flat network where every Pod has a unique IP reachable from any other Pod without NAT. Network plugins (CNI) implement this."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What is kubectl?",
+    "choices": {
+      "A": "The official Kubernetes command-line tool for interacting with a cluster's API server",
+      "B": "A GUI dashboard for managing and visualizing Kubernetes clusters",
+      "C": "The container runtime used by Kubernetes to start and stop containers",
+      "D": "A Kubernetes control plane component that schedules Pods to nodes"
+    },
+    "correct": "A",
+    "explanation": "kubectl is the CLI that sends API requests to the Kubernetes API server. It reads cluster connection info from the kubeconfig file to know which cluster to target."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What does the kubeconfig file store?",
+    "choices": {
+      "A": "Cluster connection details, user credentials, and context info so kubectl knows which cluster to communicate with",
+      "B": "The desired state of all running Pods in the cluster",
+      "C": "Container image pull secrets for accessing private registries",
+      "D": "The node configuration for each worker node in the cluster"
+    },
+    "correct": "A",
+    "explanation": "The kubeconfig file (default: ~/.kube/config) holds clusters, users, and contexts. A context is a named combination of cluster + user + namespace for kubectl to use."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "When you enable Kubernetes in Docker Desktop, where does the Kubernetes control plane run?",
+    "choices": {
+      "A": "Inside a lightweight Linux VM on your local machine managed by Docker Desktop",
+      "B": "On a remote cloud server provisioned automatically by Docker Inc.",
+      "C": "As Docker Compose services on your host OS",
+      "D": "As a separate physical machine you must configure manually"
+    },
+    "correct": "A",
+    "explanation": "Docker Desktop runs a Linux VM locally. The Kubernetes control plane (API server, etcd, scheduler, etc.) runs inside that VM as containers, making local development seamless."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What command lists all nodes in your Kubernetes cluster?",
+    "choices": {
+      "A": "kubectl list nodes",
+      "B": "kubectl get nodes",
+      "C": "kubectl show nodes",
+      "D": "kubectl describe cluster"
+    },
+    "correct": "B",
+    "explanation": "'kubectl get nodes' is the standard command. Add '-o wide' for extra details or 'kubectl describe node <name>' for full node information."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What is a kubectl 'context'?",
+    "choices": {
+      "A": "A namespace that groups related Kubernetes resources together",
+      "B": "A named combination of cluster, user, and namespace that kubectl uses to connect to a specific cluster",
+      "C": "A configuration file that overrides the default Pod scheduling behaviour",
+      "D": "A label selector that filters which resources are displayed by kubectl"
+    },
+    "correct": "B",
+    "explanation": "Contexts let you switch between clusters quickly. 'kubectl config use-context <name>' switches the active context without editing the kubeconfig file manually."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What does 'kubectl apply -f app.yml' do?",
+    "choices": {
+      "A": "It deletes all resources defined in app.yml from the cluster",
+      "B": "It sends the manifest to the API server and creates or updates the resources defined in it",
+      "C": "It validates the YAML syntax without making any changes to the cluster",
+      "D": "It compiles the YAML into a binary format and caches it locally"
+    },
+    "correct": "B",
+    "explanation": "'kubectl apply' is idempotent \u2014 it creates resources that don't exist and updates ones that do. It is the preferred way to manage resources declaratively."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What is Linode Kubernetes Engine (LKE)?",
+    "choices": {
+      "A": "A self-hosted Kubernetes distribution for on-premises data centres",
+      "B": "A Kubernetes management tool built by the open-source community",
+      "C": "A managed Kubernetes service offered by Akamai/Linode where the control plane is fully managed for you",
+      "D": "An alternative to kubectl for interacting with Kubernetes clusters via a REST API"
+    },
+    "correct": "C",
+    "explanation": "LKE is a managed Kubernetes service \u2014 Akamai/Linode runs the control plane, so you only need to worry about your worker nodes and workloads."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What does 'kubectl config get-contexts' show?",
+    "choices": {
+      "A": "The list of all Pods running across all namespaces in the cluster",
+      "B": "The complete YAML definitions of all resources applied to the cluster",
+      "C": "All named contexts in your kubeconfig file, including which one is currently active",
+      "D": "The Kubernetes component versions and the API server endpoint"
+    },
+    "correct": "C",
+    "explanation": "This command lists every context in your kubeconfig, marking the active one with an asterisk (*). Useful when working with multiple clusters."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What is the purpose of 'kubectl describe pod <pod-name>'?",
+    "choices": {
+      "A": "It terminates the specified Pod and prints a confirmation message",
+      "B": "It lists all containers in the Pod with their real-time CPU and memory usage",
+      "C": "It shows detailed information about a Pod including events, status, conditions, and container specs",
+      "D": "It opens an interactive shell session inside the Pod's first container"
+    },
+    "correct": "C",
+    "explanation": "'kubectl describe' is essential for debugging. The Events section at the bottom often reveals why a Pod is not starting \u2014 image pull failures, insufficient resources, etc."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What flag targets a specific namespace in most kubectl commands?",
+    "choices": {
+      "A": "--context",
+      "B": "--selector",
+      "C": "--cluster",
+      "D": "-n or --namespace"
+    },
+    "correct": "D",
+    "explanation": "'-n <namespace>' (or '--namespace') scopes the command to that namespace. Without it, kubectl uses the namespace set in the active context (usually 'default')."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What happens if you run 'kubectl apply' with the same manifest file twice?",
+    "choices": {
+      "A": "Kubernetes returns an error \u2014 you must use 'kubectl replace' for updates",
+      "B": "The resource is deleted and fully re-created with a brief interruption",
+      "C": "The second apply is silently ignored because the resource already exists",
+      "D": "Kubernetes diffs the manifest against live state and only updates fields that changed \u2014 no duplicate is created"
+    },
+    "correct": "D",
+    "explanation": "'kubectl apply' is idempotent. If the resource exists and the desired state matches, nothing changes. Only changed fields are updated \u2014 this is the core of the declarative model."
+  },
+  {
+    "chapter": 3,
+    "chapter_title": "Getting Kubernetes",
+    "question": "What does 'kubectl rollout status deployment <name>' do?",
+    "choices": {
+      "A": "Displays the resource limits and requests configured on the Deployment",
+      "B": "Lists all historical revisions of the Deployment with their timestamps",
+      "C": "Immediately rolls back the Deployment to the previous revision",
+      "D": "Watches and reports progress of an in-progress rolling update until it completes or times out"
+    },
+    "correct": "D",
+    "explanation": "This command is useful for CI/CD pipelines. It blocks and streams progress, exiting with a non-zero code if the rollout fails or times out."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "Why are containers always deployed inside Pods in Kubernetes rather than directly?",
+    "choices": {
+      "A": "Pods provide shared networking and storage, and are the unit Kubernetes schedules, scales, and manages",
+      "B": "Pods provide a built-in load balancer for the containers inside them",
+      "C": "Containers cannot pull images without being inside a Pod",
+      "D": "Kubernetes only supports Docker images, which require the Pod wrapper to function"
+    },
+    "correct": "A",
+    "explanation": "Kubernetes works at the Pod level, not the container level. Pods enable co-located containers to share networking (same IP) and volumes, and are the atomic unit of orchestration."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What do containers inside the same Pod share?",
+    "choices": {
+      "A": "The same network namespace (IP address, hostname) and the same storage volumes",
+      "B": "The same CPU and memory pool allocated equally to each container",
+      "C": "The same container image and entry-point command",
+      "D": "The same read-write filesystem with no isolation between containers"
+    },
+    "correct": "A",
+    "explanation": "All containers in a Pod share one IP address and can talk to each other on localhost. They also share any volumes mounted in the Pod spec."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What is an init container?",
+    "choices": {
+      "A": "A special container that runs and completes before the main app containers start \u2014 used for setup or prerequisite tasks",
+      "B": "A container that monitors the health of other containers in the same Pod",
+      "C": "The first container listed in a multi-container Pod spec",
+      "D": "A container that initializes Kubernetes networking when a node boots"
+    },
+    "correct": "A",
+    "explanation": "Init containers always run to completion before any app containers start. They are perfect for tasks like waiting for a database to be ready or setting up configuration files."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What is a sidecar container?",
+    "choices": {
+      "A": "A container that runs before the main app container to perform initialization tasks",
+      "B": "A helper container running alongside the main app container in the same Pod, extending or supporting its functionality",
+      "C": "A container used exclusively for running periodic health checks on the app",
+      "D": "A backup container that takes over if the main container crashes"
+    },
+    "correct": "B",
+    "explanation": "Sidecars are a common pattern for concerns like logging, proxying (e.g., Envoy in service meshes), or syncing configuration \u2014 they run alongside the main app in the same Pod."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What does a liveness probe do?",
+    "choices": {
+      "A": "It checks whether the Pod is ready to receive traffic before adding it to a Service's endpoint list",
+      "B": "It checks whether the application inside the container is still alive \u2014 if it fails, Kubernetes restarts the container",
+      "C": "It verifies that the container image can be pulled successfully from the registry",
+      "D": "It measures CPU and memory usage to decide whether to scale the Pod"
+    },
+    "correct": "B",
+    "explanation": "Liveness probes detect stuck or deadlocked apps. If the probe fails repeatedly, Kubernetes kills and restarts the container \u2014 without this, a stuck app would remain running and useless."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What is the purpose of a readiness probe?",
+    "choices": {
+      "A": "It checks whether the container process is still running (restarts it if not)",
+      "B": "It determines whether the Pod is ready to receive traffic \u2014 Pods that fail are removed from Service endpoints",
+      "C": "It validates that all containers in the Pod have started successfully before any traffic is sent",
+      "D": "It tests network connectivity between the Pod and its external dependencies"
+    },
+    "correct": "B",
+    "explanation": "Readiness probes protect users during startup or temporary overload. A Pod that fails readiness is removed from the Service's EndpointSlice but is not restarted."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What is the difference between resource 'requests' and 'limits' in a Pod spec?",
+    "choices": {
+      "A": "Requests apply to memory only; limits apply to CPU only",
+      "B": "Requests define the maximum a container can use; limits define the minimum guaranteed",
+      "C": "Requests are the minimum resources Kubernetes guarantees for scheduling; limits are the maximum a container can use",
+      "D": "Requests and limits are identical \u2014 they both define the exact CPU and memory a container receives"
+    },
+    "correct": "C",
+    "explanation": "The scheduler uses requests to find a suitable node. Limits cap actual usage \u2014 exceed the memory limit and the container is OOMKilled; exceed CPU and it is throttled."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What happens when a container exceeds its memory limit in Kubernetes?",
+    "choices": {
+      "A": "The container is paused and resumed when memory becomes available",
+      "B": "Kubernetes migrates the Pod to a node with more available memory",
+      "C": "The container is killed (OOMKilled) and restarted by the kubelet",
+      "D": "The container receives a warning but is allowed to continue running"
+    },
+    "correct": "C",
+    "explanation": "Unlike CPU throttling, memory cannot be throttled \u2014 the container is killed immediately when it exceeds the limit. This triggers the Pod's restartPolicy."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What is a Pod's phase when all its containers have run to completion successfully?",
+    "choices": {
+      "A": "Running",
+      "B": "Pending",
+      "C": "Succeeded",
+      "D": "Completed"
+    },
+    "correct": "C",
+    "explanation": "The 'Succeeded' phase means all containers exited with code 0. This is typical for batch/Job Pods. Long-running Pods should always be in the 'Running' phase."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What does it mean when a Pod is in the 'Pending' phase?",
+    "choices": {
+      "A": "The Pod is running but its containers are not yet passing their readiness probes",
+      "B": "The Pod has completed all its work and all containers have exited cleanly",
+      "C": "The Pod hit a fatal error and is waiting to be rescheduled by the controller",
+      "D": "The Pod was accepted by the cluster but its containers have not started yet \u2014 typically because it is being scheduled or images are being pulled"
+    },
+    "correct": "D",
+    "explanation": "'Pending' is a transient state. Common causes: no node has enough resources, the image is being pulled, or a volume is being provisioned. Check events with 'kubectl describe'."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "What is the purpose of spec.restartPolicy in a Pod definition?",
+    "choices": {
+      "A": "How often Kubernetes runs health checks on the Pod's containers",
+      "B": "The maximum times a Pod can be rescheduled after a node failure",
+      "C": "The order in which containers in a multi-container Pod are started",
+      "D": "What Kubernetes does when a container exits: Always restart, restart only on failure (OnFailure), or Never"
+    },
+    "correct": "D",
+    "explanation": "restartPolicy defaults to 'Always' for Deployments. Use 'OnFailure' for batch jobs that should only retry on error, or 'Never' for one-shot tasks."
+  },
+  {
+    "chapter": 4,
+    "chapter_title": "Working with Pods",
+    "question": "How do you run an interactive shell inside a running container?",
+    "choices": {
+      "A": "kubectl start shell <pod-name>",
+      "B": "kubectl attach <pod-name> --interactive",
+      "C": "kubectl run shell --image=<pod-name>",
+      "D": "kubectl exec -it <pod-name> -- sh (or bash, depending on the image)"
+    },
+    "correct": "D",
+    "explanation": "'kubectl exec -it' opens an interactive terminal. The '-i' flag keeps stdin open; '-t' allocates a pseudo-TTY. Use '--' to separate kubectl args from the command to run."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What is the primary purpose of Kubernetes Namespaces?",
+    "choices": {
+      "A": "To partition a single Kubernetes cluster into multiple virtual clusters with separate resource scopes",
+      "B": "To isolate Pods from each other at the Linux kernel level using cgroups and namespaces",
+      "C": "To create physically separate networks for different teams on the same hardware",
+      "D": "To prevent containers from sharing the host OS kernel"
+    },
+    "correct": "A",
+    "explanation": "Kubernetes Namespaces are virtual clusters within a physical cluster. They scope names, quotas, and policies \u2014 but they are soft isolation, not hard security boundaries."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "Which of the following resources is cluster-scoped (NOT namespaced) in Kubernetes?",
+    "choices": {
+      "A": "Nodes and PersistentVolumes",
+      "B": "Pods and Deployments",
+      "C": "Services and ConfigMaps",
+      "D": "Secrets and ServiceAccounts"
+    },
+    "correct": "A",
+    "explanation": "Nodes and PersistentVolumes are cluster-scoped \u2014 they exist globally, not within any Namespace. Most other API resources (Pods, Services, ConfigMaps) are namespaced."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What type of isolation do Kubernetes Namespaces provide?",
+    "choices": {
+      "A": "Soft isolation \u2014 a compromised workload in one Namespace can still affect workloads in others",
+      "B": "Hard isolation \u2014 workloads in different Namespaces are completely isolated from each other",
+      "C": "Network isolation \u2014 by default, Pods in different Namespaces cannot communicate with each other",
+      "D": "Kernel isolation \u2014 each Namespace runs on a separate Linux kernel instance"
+    },
+    "correct": "A",
+    "explanation": "Namespaces are a form of logical partitioning, not a security boundary. Without additional NetworkPolicies and RBAC, a compromised Pod can reach other Namespaces."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What is the 'default' Namespace used for in Kubernetes?",
+    "choices": {
+      "A": "It is reserved for Kubernetes system components like the API server and scheduler Pods",
+      "B": "It is where resources land when no namespace is specified in the manifest or kubectl command",
+      "C": "It is a read-only namespace visible to all users for sharing public cluster information",
+      "D": "It is used exclusively for storing cluster-level secrets and credentials"
+    },
+    "correct": "B",
+    "explanation": "If you don't specify a namespace in your YAML or kubectl command, resources go to 'default'. It is not special in any other way \u2014 it just prevents empty namespace errors."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What does the 'kube-system' Namespace contain?",
+    "choices": {
+      "A": "Resources for the default application workloads running on the cluster",
+      "B": "Core Kubernetes system components such as CoreDNS, kube-proxy, and the API server Pods",
+      "C": "Resources shared between all namespaces in read-only mode for discovery",
+      "D": "Node heartbeat leases used to detect node failures quickly"
+    },
+    "correct": "B",
+    "explanation": "kube-system hosts the internal Kubernetes machinery. You should never delete or casually modify objects in this namespace \u2014 doing so can break the cluster."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What is a ResourceQuota used for?",
+    "choices": {
+      "A": "It limits the number of nodes that can join the cluster at one time",
+      "B": "It sets caps on the total amount of CPU, memory, and object counts consumable within a Namespace",
+      "C": "It defines per-container resource limits applied automatically to all Pods in the cluster",
+      "D": "It restricts which container images can be pulled and deployed to a Namespace"
+    },
+    "correct": "B",
+    "explanation": "ResourceQuotas enforce aggregate limits on a Namespace (e.g., total CPU, total memory, max Pod count). LimitRanges set per-container defaults and limits."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "How do you deploy a Pod to a specific Namespace using kubectl apply?",
+    "choices": {
+      "A": "By setting the 'kind: Namespace' field in the Pod YAML manifest",
+      "B": "By adding a --cluster flag to the kubectl apply command",
+      "C": "By setting metadata.namespace in the YAML, or using the -n <namespace> flag with kubectl",
+      "D": "By labelling the Pod with 'namespace=<name>' in the metadata section"
+    },
+    "correct": "C",
+    "explanation": "The namespace can be declared in the manifest (metadata.namespace) or overridden at the command line with '-n'. The manifest value takes precedence."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What is the 'kube-public' Namespace used for?",
+    "choices": {
+      "A": "It holds the default RBAC policies applied across the entire cluster",
+      "B": "It contains temporary Pods created during rolling updates",
+      "C": "It is readable by all users including unauthenticated ones \u2014 used for cluster-wide public information like bootstrap data",
+      "D": "It stores ConfigMaps and Secrets shared between all Namespaces"
+    },
+    "correct": "C",
+    "explanation": "kube-public is world-readable by convention. It contains a ConfigMap with cluster info (like the API server address) used during bootstrap before authentication is established."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What does 'kubectl get pods --all-namespaces' (or -A) show?",
+    "choices": {
+      "A": "All Pods that have ever run on the cluster, including terminated ones",
+      "B": "Only Pods in the kube-system and default namespaces",
+      "C": "All currently running Pods across every namespace in the cluster in a single view",
+      "D": "Only Pods in the Running phase across all namespaces"
+    },
+    "correct": "C",
+    "explanation": "'-A' (or '--all-namespaces') shows resources across all namespaces in one output. It also adds a NAMESPACE column so you can see which namespace each Pod belongs to."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What is the 'kube-node-lease' Namespace used for?",
+    "choices": {
+      "A": "It holds the kubelet configuration for each worker node",
+      "B": "It contains network policies that apply to all nodes in the cluster",
+      "C": "It stores persistent volumes bound to specific nodes",
+      "D": "It holds Lease objects that worker nodes use to send heartbeats to the control plane, enabling faster node failure detection"
+    },
+    "correct": "D",
+    "explanation": "Before kube-node-lease, node heartbeats were written directly to Node objects, causing high load on the API server and etcd at scale. Lease objects are much lighter."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "What happens if you create a namespaced resource without specifying a namespace?",
+    "choices": {
+      "A": "Kubernetes returns an error and refuses to create the resource",
+      "B": "The resource is created in the kube-system namespace",
+      "C": "The resource is created in a new namespace named after the resource type",
+      "D": "The resource is created in the 'default' namespace automatically"
+    },
+    "correct": "D",
+    "explanation": "Kubernetes defaults unspecified namespaces to 'default'. This can catch you off guard if you meant to deploy to a different namespace \u2014 always check with 'kubectl get ... -n <ns>'."
+  },
+  {
+    "chapter": 5,
+    "chapter_title": "Virtual Clusters with Namespaces",
+    "question": "Which kubectl command creates a new Namespace called 'staging'?",
+    "choices": {
+      "A": "kubectl add namespace staging",
+      "B": "kubectl apply namespace staging",
+      "C": "kubectl namespace create staging",
+      "D": "kubectl create namespace staging (or kubectl create ns staging)"
+    },
+    "correct": "D",
+    "explanation": "'kubectl create namespace' (or the shorthand 'ns') is the imperative command. You can also apply a YAML with 'kind: Namespace' declaratively using 'kubectl apply -f'."
+  },
+  {
+    "chapter": 2,
+    "chapter_title": "Kubernetes Principles of Operation",
+    "question": "What does the ReplicaSet controller do during its reconciliation loop?",
+    "choices": {
+      "A": "It only creates Pods when a Deployment is first submitted to the cluster",
+      "B": "It terminates Pods that exceed their memory limits",
+      "C": "It continuously compares the desired replica count with the actual count and adds or removes Pods to match",
+      "D": "It updates Pods one at a time to perform rolling updates"
+    },
+    "correct": "C",
+    "explanation": "The ReplicaSet controller runs a continuous reconciliation loop. Whenever observed state (actual Pods) drifts from desired state (replica count), it creates or deletes Pods to restore balance."
+  }
+]
