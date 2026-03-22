@@ -41,7 +41,7 @@ FRONT = """\
   <div class="choice"><b>C)</b> {{ChoiceC}}</div>
   <div class="choice"><b>D)</b> {{ChoiceD}}</div>
 </div>
-<p class="prompt">Type the correct letter (A / B / C / D):</p>
+<p class="prompt">Type the correct letter (a / b / c / d):</p>
 {{type:CorrectAnswer}}
 """
 
@@ -63,7 +63,7 @@ body { font-family: Arial, sans-serif; font-size: 16px; color: #222; }
 .choice { margin: 6px 0; }
 .prompt { color: #555; font-style: italic; margin-bottom: 6px; }
 .result { background: #e8f5e9; padding: 12px; border-radius: 4px; margin-top: 8px; }
-.letter { font-size: 1.25em; font-weight: bold; color: #2e7d32; }
+.letter { font-size: 1.25em; font-weight: bold; color: #2e7d32; text-transform: uppercase; }
 .explanation { margin-top: 8px; line-height: 1.55; }
 .chapter-tag { margin-top: 10px; font-size: 0.8em; color: #888; }
 """
@@ -203,7 +203,7 @@ def main() -> None:
                     q["choices"]["B"],
                     q["choices"]["C"],
                     q["choices"]["D"],
-                    q["correct"].upper(),
+                    q["correct"].lower(),
                     q["explanation"],
                     ch_label,
                 ],
